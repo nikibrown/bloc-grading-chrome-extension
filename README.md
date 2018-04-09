@@ -2,9 +2,9 @@
 
 Chrome extension for Bloc graders to auto fill with default grading message and students name.
 
-### Video Demo
+### GIF Demo
 
-[http://nikib.ro/wn/screenshots/bloc-chrome-extension.mp4](http://nikib.ro/wn/screenshots/bloc-chrome-extension.mp4)
+![GIF](http://nikib.ro/wn/screenshots/chrome-extension.gif)
 
 - Only works when `#submission` is at the end of URL (or textarea is visible on the page): [https://www.bloc.io/users/nick-noel/checkpoints/2017#submission](https://www.bloc.io/users/nick-noel/checkpoints/2017#submission) (ie you are clicking on a link from the grading spreadsheet)
 
