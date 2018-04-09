@@ -1,0 +1,14 @@
+{
+  "manifest_version": 2,
+  "name": "Bloc Grading Chrome Extension",
+  "description": "Chrome extension for Bloc graders to auto fill with default grading message and students name.",
+  "version": "0.1",
+  "content_scripts": [
+      {
+        "matches": [
+          "*://www.bloc.io/users*"
+        ],
+        "js": ["grading-msg.js"]
+      }
+    ]
+}
