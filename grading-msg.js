@@ -1,5 +1,5 @@
 window.onload = function() {
-    alert("Grading extension is running");
+    console.log("Grading extension is running");
     // grab the HTML element that has the students name in it
     var studentNameContainer = document.getElementsByClassName('mentor-review-header');
 
