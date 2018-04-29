@@ -6,7 +6,8 @@
   "content_scripts": [
       {
         "matches": [
-          "*://www.bloc.io/users*"
+          "*://www.bloc.io/users*",
+          "https://rawgit.com/"
         ],
         "js": ["grading-msg.js"]
       }
