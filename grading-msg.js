@@ -19,4 +19,19 @@ window.onload = function() {
 
     // set value of text area with student name
     submissionTextarea.value = gradingMessage;
+
+    // rawgit.com url magic
+    let urlProdInput = document.querySelector("#url-prod");
+
+    let urlPasted = document.querySelector("#url");
+
+    var changeURL = function () {
+        document.location.href = urlProdInput.value;
+    }
+
+    urlPasted.addEventListener("input", function() {
+        // needed to use setTimeout because the prodURL does not populate right away
+        setTimeout(changeURL, 100);
+    });
+
 };
