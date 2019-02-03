@@ -41,8 +41,9 @@
 
         // Take only the first name
         const studentName = fullStudentName.split(" ")[0];
+        const thinkfulSlackLink = "https://thinkful.slack.com/messages/general-discussion/";
         // grading message goes here
-        const gradingMessage = `Hi ${studentName}! ${graderName} from the grading team here!\n\n***\nIf anything here that I’ve mentioned is unclear, please don’t hesitate to reach out for help via Slack. \n\nThanks, ${graderName}\n\nGranding Team Member`;
+        const gradingMessage = `Hi ${studentName}! ${graderName} from the grading team here!\n\n***\nIf anything here that I’ve mentioned is unclear, please don’t hesitate to [reach out for help via Slack.](${thinkfulSlackLink}) \n\nThanks, **${graderName}**\n\nGranding Team Member`;
         // set value of text area with student name
         submissionTextarea.value = gradingMessage;
       }
