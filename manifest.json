@@ -1,13 +1,14 @@
 {
-  "manifest_version": 2,
-  "name": "Bloc Grading Chrome Extension",
-  "description": "Chrome extension for Bloc graders to auto fill with default grading message and students name.",
-  "version": "0.1",
+  "manifest_version": 3,
+  "name": "Bloc/Thinkful Grading Chrome Extension",
+  "description": "Chrome extension for Bloc and Thinkful graders to auto fill with default grading message and students name.",
+  "version": "1",
   "content_scripts": [
       {
         "matches": [
           "*://www.bloc.io/users*",
-          "https://rawgit.com/"
+          "https://rawgit.com/",
+          "*://lark.thinkful.com/grading*"
         ],
         "js": ["grading-msg.js"]
       }
