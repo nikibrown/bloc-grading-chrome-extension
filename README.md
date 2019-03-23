@@ -20,7 +20,8 @@ Chrome extension for Bloc graders to auto fill with default grading message and 
 - Thats it!
 
 ### Usage
-- Go to the options page by clicking on the extension and then on "Options".
+- Open the options by clicking on the chrome extension icon (To have it on an page, right-click  
+on it and then on "Options").
 - Enter your name and the type of grading you do.
 ![extension options](https://t.gyazo.com/teams/leovegas/0dbf3354d7e28328794ea6508ed8c2f3.png)
 - Go to any submission you're grading and the snippet will be added on page load. It will 
