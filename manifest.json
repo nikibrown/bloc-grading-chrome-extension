@@ -12,5 +12,7 @@
         ],
         "js": ["grading-msg.js"]
       }
-    ]
+    ],
+  "permissions": ["storage"],
+  "options_page": "options.html"
 }
