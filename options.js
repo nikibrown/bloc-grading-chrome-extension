@@ -1,6 +1,6 @@
 const getGraderType = (type) => `"${type.replace('-', ' ')}"`;
 
-function saveUserData() {
+function saveGraderData() {
   let optionButtons = document.getElementsByClassName('grader-type');
   for (let button of optionButtons) {
     button.addEventListener('click', (e) => {
@@ -26,4 +26,4 @@ function populateUserData() {
 }
 
 populateUserData();
-saveUserData();
+saveGraderData();
