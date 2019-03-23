@@ -1,9 +1,11 @@
+const getGraderType = (type) => `"${type.replace('-', ' ')}"`;
+
 function saveUserData() {
   let optionButtons = document.getElementsByClassName('grader-type');
   for (let button of optionButtons) {
     button.addEventListener('click', (e) => {
       chrome.storage.sync.set({ graderType: e.target.id });
-      document.getElementById('grader-type-is').innerText = `Grader type is: ${e.target.id}`
+      document.getElementById('grader-type-is').innerText = `Grader type is: ${getGraderType(e.target.id)}`;
     });
   }
 
@@ -19,7 +21,7 @@ function populateUserData() {
     document.getElementById('grader-name').value = data && data.graderName || '';
   });
   chrome.storage.sync.get('graderType', (data) => {
-    document.getElementById('grader-type-is').innerText = `Grader type is: "${data.graderType.replace('-', ' ')}"`
+    document.getElementById('grader-type-is').innerText = `Grader type is: ${getGraderType(data.graderType)}`;
   });
 }
 
