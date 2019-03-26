@@ -12,5 +12,11 @@
         ],
         "js": ["grading-msg.js"]
       }
-    ]
+    ],
+  "permissions": ["storage"],
+  "options_page": "options.html",
+  "browser_action": {
+    "default_popup": "options.html",
+    "default_title": "Grading Options"
+  }
 }

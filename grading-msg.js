@@ -1,8 +1,19 @@
-  window.onload = function () {
+const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1);
+const getGraderSignature = (graderName) => `\n\nThanks, ${graderName && `**${graderName}**`}\n\n_Grading Team Member_`;
+const getIntroText = (graderName, studentName) => `Hi ${studentName}! ${graderName && `${graderName} from the grading team here!`}\n\n`;
+const separator = `\n\n***\n`;
+
+window.onload = function () {
+
+// Populate grader options.
+// Pass null to get all store
+  chrome.storage.sync.get(null, (data) => {
+    const graderName = data.graderName || '';
+    const devGrader = data.graderType === 'dev-grader';
+    const designGrader = data.graderType === 'design-grader';
+
     const isBloc = window.location.href.includes('bloc');
     const isThinkful = window.location.href.includes('thinkful');
-    // Your name here!
-    const graderName = 'Obed';
 
     if (isBloc) {
       // grab the HTML element that has the students name in it
@@ -14,25 +25,25 @@
       const splitString = studentNameSentence.split(' ');
 
       // grab the name!
-      const studentName = splitString[2];
-
-      // grading message goes here
-      const gradingMessage = `Hi ${studentName}! ${graderName} from the grading team here!\n\n***\nIf anything here that I’ve mentioned is unclear, please don’t hesitate to [reach out for help via Slack.](https://www.bloc.io/resources/getting-unstuck) \n\nThanks, **${graderName}**\n\n_Granding Team Member_`;
+      const studentName = capitalizeFirstLetter(splitString[2]);
+      const blocDevGraderMessage = `${getIntroText(graderName, studentName)}${separator}If anything here that I’ve mentioned is unclear, please don’t hesitate to [reach out for help via Slack.](https://www.bloc.io/resources/getting-unstuck) ${getGraderSignature(graderName)}`;
 
       // get textzarea
       const submissionTextarea = document.getElementById('comment-box');
 
-      // set value of text area with student name
-      submissionTextarea.value = gradingMessage;
+      if (submissionTextarea) {
+        // set value of text area with student name
+        submissionTextarea.value = blocDevGraderMessage;
+      }
     }
 
     if (isThinkful) {
       // get textzarea
       const submissionTextarea = document.getElementById('content');
-      // Get content in the text area as Thinkful something adds the instructions in here
-      const contentInTextArea = submissionTextarea.value;
 
-      if(submissionTextarea) {
+      if (submissionTextarea) {
+        // Get content in the text area as Thinkful something adds the instructions in here
+        const contentInTextArea = submissionTextarea.value;
         // Ge the student's name (which doesn't have a specific class :( ).
         const fullStudentName =
           document.getElementsByClassName('submission-grader-card-top-bar')[0]
@@ -40,30 +51,37 @@
             .innerHTML;
 
         // Take only the first name
-        const studentName = fullStudentName.split(" ")[0];
-        const thinkfulSlackLink = "https://thinkful.slack.com/messages/general-discussion/";
-        // grading message goes here
-        const gradingMessage = `Hi ${studentName}! ${graderName} from the grading team here!\n\n${contentInTextArea}\n\n***\nIf anything here that I’ve mentioned is unclear, please don’t hesitate to [reach out for help via Slack.](${thinkfulSlackLink}) \n\nThanks, **${graderName}**\n\nGrading Team Member`;
-        // set value of text area with student name
-        submissionTextarea.value = gradingMessage;
+        const studentName = capitalizeFirstLetter(fullStudentName.split(' ')[0]);
+
+        // Dev and Designer messages, each its different
+        const thinkfulDevMessage = `${getIntroText(graderName, studentName)}${contentInTextArea}${separator}If anything here that I’ve mentioned is unclear, please don’t hesitate to join an Q&A session for technical assistance via [Slack](https://www.thinkful.com/open-sessions/qa-sessions/). If it’s a question about the feedback, feel free to resubmit with a question and the grading team will get back to you as quickly as possible. ${getGraderSignature(graderName)}`;
+        const thinkfulDesignMessage = `${getIntroText(graderName, studentName)}${contentInTextArea}${separator}If anything here that I’ve mentioned is unclear, please don’t hesitate to reach out for technical assistance via Slack in the [#product-design channel](https://thinkful.slack.com/messages/product-design/). If it’s a question about the feedback, feel free to resubmit with a question. ${getGraderSignature(graderName)}`;
+
+        if (devGrader) {
+          submissionTextarea.value = thinkfulDevMessage;
+        } else if (designGrader) {
+          submissionTextarea.value = thinkfulDesignMessage;
+        } else {
+          submissionTextarea.value = 'Please select your grader type in the extension options';
+        }
       }
     }
+  });
 
-    // rawgit.com url magic
-    if (window.location.href.indexOf('rawgit') > -1) {
-      console.log('rawgit js');
-      const urlProdInput = document.querySelector('#url-prod');
+  // rawgit.com url magic
+  if (window.location.href.indexOf('rawgit') > -1) {
+    const urlProdInput = document.querySelector('#url-prod');
 
-      const urlPasted = document.querySelector('#url');
+    const urlPasted = document.querySelector('#url');
 
-      const changeURL = function () {
-        document.location.href = urlProdInput.value;
-      };
+    const changeURL = function () {
+      document.location.href = urlProdInput.value;
+    };
 
-      urlPasted.addEventListener('input', function () {
-        // needed to use setTimeout because the prodURL does not populate right away
-        setTimeout(changeURL, 200);
-      });
-    }
+    urlPasted.addEventListener('input', function () {
+      // needed to use setTimeout because the prodURL does not populate right away
+      setTimeout(changeURL, 200);
+    });
+  }
 
-  };
+};
