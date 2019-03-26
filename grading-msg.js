@@ -26,7 +26,7 @@ window.onload = function () {
 
       // grab the name!
       const studentName = capitalizeFirstLetter(splitString[2]);
-      const blocDevGraderMessage = `${getIntroText(graderName, studentName)}${separator}If anything here that I’ve mentioned is unclear, please don’t hesitate to [reach out for help via Slack.](https://www.bloc.io/resources/getting-unstuck) ${getGraderSignature(graderName)}`;
+      const blocDevGraderMessage = `${getIntroText(graderName, studentName)}${separator}If anything here that I’ve mentioned is unclear, please don’t hesitate to [reach out for help via Slack.](http://bit.ly/bloc-grading-unstuck) \n\nWant to learn more? Check out our [group sessions & QA resources page](http://bit.ly/gs-g-home) with hours of recorded video and live sessions.\n ${getGraderSignature(graderName)}`;
 
       // get textzarea
       const submissionTextarea = document.getElementById('comment-box');
@@ -54,8 +54,9 @@ window.onload = function () {
         const studentName = capitalizeFirstLetter(fullStudentName.split(' ')[0]);
 
         // Dev and Designer messages, each its different
-        const thinkfulDevMessage = `${getIntroText(graderName, studentName)}${contentInTextArea}${separator}If anything here that I’ve mentioned is unclear, please don’t hesitate to join an Q&A session for technical assistance via [Slack](https://www.thinkful.com/open-sessions/qa-sessions/). If it’s a question about the feedback, feel free to resubmit with a question and the grading team will get back to you as quickly as possible. ${getGraderSignature(graderName)}`;
-        const thinkfulDesignMessage = `${getIntroText(graderName, studentName)}${contentInTextArea}${separator}If anything here that I’ve mentioned is unclear, please don’t hesitate to reach out for technical assistance via Slack in the [#product-design channel](https://thinkful.slack.com/messages/product-design/). If it’s a question about the feedback, feel free to resubmit with a question. ${getGraderSignature(graderName)}`;
+        const thinkfulDevMessage = `${getIntroText(graderName, studentName)}${contentInTextArea}${separator}If anything here that I’ve mentioned is unclear, please don’t hesitate to join an Q&A session for technical assistance via [Slack](http://bit.ly/tf-dev-grading-help). If it’s a question about the feedback, feel free to resubmit with a question and the grading team will get back to you as quickly as possible. \n\nWant to learn more? Check out our [group sessions & QA resources page](http://bit.ly/gs-g-home) with hours of recorded video and live sessions.\n ${getGraderSignature(graderName)}`;
+        
+        const thinkfulDesignMessage = `${getIntroText(graderName, studentName)}${contentInTextArea}${separator}If anything here that I’ve mentioned is unclear, please don’t hesitate to reach out for technical assistance via Slack in the [#product-design channel](http://bit.ly/td-pdf-grading-help). If it’s a question about the feedback, feel free to resubmit with a question.\n\nWant to learn more? Check out our [group sessions & QA resources page](http://bit.ly/gs-g-home) with hours of recorded video and live sessions.\n ${getGraderSignature(graderName)}`;
 
         if (devGrader) {
           submissionTextarea.value = thinkfulDevMessage;
