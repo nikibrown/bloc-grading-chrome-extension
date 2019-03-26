@@ -2,7 +2,7 @@
 
 Chrome extension for Bloc graders to auto fill with default grading message and students name.
 
-### Video wal;k through
+### Video walk through
 
 [http://nikib.ro/wn/screenshots/grading-chrome-ext-howto.mp4](hhttp://nikib.ro/wn/screenshots/grading-chrome-ext-howto.mp4)
 
