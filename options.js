@@ -1,4 +1,4 @@
-const getGraderType = (type) => `"${type.replace('-', ' ')}"`;
+const getGraderType = (type) => `"${type && type.replace('-', ' ')}"`;
 
 function saveGraderData() {
   let optionButtons = document.getElementsByClassName('grader-type');
@@ -12,18 +12,24 @@ function saveGraderData() {
   const graderName = document.getElementById('grader-name');
   graderName.addEventListener('input', (e) => {
     chrome.storage.sync.set({ graderName: e.target.value });
-    console.log(e.target.value);
   });
 }
 
 function populateUserData() {
-  chrome.storage.sync.get('graderName', (data) => {
+  chrome.storage.sync.get(null, (data) => {
     document.getElementById('grader-name').value = data && data.graderName || '';
-  });
-  chrome.storage.sync.get('graderType', (data) => {
+    document.getElementById('intro-message').value = data.introMessage || '';
     document.getElementById('grader-type-is').innerText = `Grader type is: ${getGraderType(data.graderType)}`;
   });
 }
 
+function saveIntroMessage(){
+  const introMessage = document.getElementById('intro-message');
+  introMessage.addEventListener('input', (e) => {
+    chrome.storage.sync.set({ introMessage: e.target.value });
+  });
+}
+
+saveIntroMessage();
 populateUserData();
 saveGraderData();

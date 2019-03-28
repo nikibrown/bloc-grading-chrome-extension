@@ -28,3 +28,4 @@ on it and then on "Options").
 - Go to any submission that you have clamied from the grading queue and the snippet will be added on page load. It will 
 automatically change for bloc/thinkful depending on your type.
 - If you grade both Dev and Design, you can easily switch from one to the other by selecting the grader type from the extension options menu and the snippet will automatically adapt.
+- You can also customize the intro message from the default to your own if you wish.
