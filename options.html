@@ -3,6 +3,9 @@
 <head>
     <title>Thinkful / Bloc extension options</title>
     <style>
+        *{
+            box-sizing: border-box;
+        }
         html {
             width: 500px;
             padding: 20px;
@@ -36,6 +39,10 @@
             display: none;
         }
 
+        .full-width{
+            width: 100%;
+        }
+
     </style>
 </head>
 <body>
@@ -45,6 +52,7 @@
 <div>
     <input type="text" name="grader-name" id="grader-name" placeholder="Grader name">
 </div>
+
 <h2>Grader type, Select yours</h2>
 <h3 id="grader-type-is"></h3>
 <button type="button" id="dev-grader" class="grader-type">
@@ -53,6 +61,15 @@
 <button type="button" id="design-grader" class="grader-type">
     Design Grading
 </button>
+
+<h2>Customize your intro message</h2>
+<label for="intro-message">Name</label>
+<p>To use student name type ${studentName}, to use your own name type ${graderName}</p>
+<p><strong>Default is:</strong> Hello ${studentName}! ${graderName} from the grading team here!</p>
+<div>
+    <input type="text" name="intro-message" id="intro-message" class="full-width"
+           placeholder="Ahoyyy ${studentName}! ${graderName} her'">
+</div>
 </body>
 <script src="options.js"></script>
 </html>

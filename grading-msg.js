@@ -1,6 +1,5 @@
 const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1);
 const getGraderSignature = (graderName) => `\n\nThanks, ${graderName && `**${graderName}**`}\n\n_Grading Team Member_`;
-const getIntroText = (graderName, studentName) => `Hi ${studentName}! ${graderName && `${graderName} from the grading team here!`}\n\n`;
 const separator = `\n\n***\n`;
 
 window.onload = function () {
@@ -11,6 +10,14 @@ window.onload = function () {
     const graderName = data.graderName || '';
     const devGrader = data.graderType === 'dev-grader';
     const designGrader = data.graderType === 'design-grader';
+    // Use the customized intro message if there's one, otherwise the default.
+    const getIntroText = (graderName, studentName) => {
+      const customIntro = data.introMessage
+        .replace(/\${studentName}/g, studentName)
+        .replace(/\${graderName}/g, graderName);
+
+      return `${customIntro}\n\n` || `Hi ${studentName}! ${graderName && `${graderName} from the grading team here!`}\n\n`;
+    };
 
     const isBloc = window.location.href.includes('bloc');
     const isThinkful = window.location.href.includes('thinkful');
@@ -55,7 +62,7 @@ window.onload = function () {
 
         // Dev and Designer messages, each its different
         const thinkfulDevMessage = `${getIntroText(graderName, studentName)}${contentInTextArea}${separator}If anything here that I’ve mentioned is unclear, please don’t hesitate to join an Q&A session for technical assistance via [Slack](http://bit.ly/tf-dev-grading-help). If it’s a question about the feedback, feel free to resubmit with a question and the grading team will get back to you as quickly as possible. \n\nWant to learn more? Check out our [group sessions & QA resources page](http://bit.ly/gs-g-home) with hours of recorded video and live sessions.\n ${getGraderSignature(graderName)}`;
-        
+
         const thinkfulDesignMessage = `${getIntroText(graderName, studentName)}${contentInTextArea}${separator}If anything here that I’ve mentioned is unclear, please don’t hesitate to reach out for technical assistance via Slack in the [#product-design channel](http://bit.ly/td-pdf-grading-help). If it’s a question about the feedback, feel free to resubmit with a question.\n\nWant to learn more? Check out our [group sessions & QA resources page](http://bit.ly/gs-g-home) with hours of recorded video and live sessions.\n ${getGraderSignature(graderName)}`;
 
         if (devGrader) {
