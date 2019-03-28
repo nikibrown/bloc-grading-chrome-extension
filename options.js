@@ -1,4 +1,4 @@
-const getGraderType = (type) => `"${type.replace('-', ' ')}"`;
+const getGraderType = (type) => `"${type && type.replace('-', ' ')}"`;
 
 function saveGraderData() {
   let optionButtons = document.getElementsByClassName('grader-type');
