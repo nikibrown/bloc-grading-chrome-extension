@@ -2,7 +2,15 @@ const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + strin
 const getGraderSignature = (graderName) => `\nThanks, ${graderName && `__${graderName}__`}`;
 const separator = `\n\n***\n`;
 
-window.onload = function () {
+// const port = chrome.runtime.connect();
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if(request.action === 'REFRESH_MESSAGE'){
+      updateMessage();
+    }
+})
+
+const updateMessage = () => {
 
 // Populate grader options.
 // Pass null to get all store
@@ -97,5 +105,8 @@ window.onload = function () {
       setTimeout(changeURL, 200);
     });
   }
+}
 
+window.onload = function () {
+  updateMessage();
 };

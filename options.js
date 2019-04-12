@@ -1,4 +1,9 @@
 const formatGradingText = (type) => `"${type && type.replace('-', ' ')}"`;
+const refreshMessage = () => {
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, {action: 'REFRESH_MESSAGE'});
+  });
+};
 
 function saveGraderData() {
   const optionButtons = document.getElementsByClassName('grader-type');
@@ -6,6 +11,8 @@ function saveGraderData() {
     button.addEventListener('click', (e) => {
       chrome.storage.sync.set({ graderType: e.target.id });
       document.getElementById('grader-type-is').innerText = `Grader type is: ${formatGradingText(e.target.id)}`;
+
+      refreshMessage();
     });
   }
 
@@ -14,6 +21,8 @@ function saveGraderData() {
     button.addEventListener('click', (e) => {
       chrome.storage.sync.set({ gradingPlatform: e.target.id });
       document.getElementById('platform-grading').innerText = `You're grading: ${formatGradingText(e.target.id)}`;
+
+      refreshMessage();
     });
   }
 
@@ -32,7 +41,7 @@ function populateUserData() {
   });
 }
 
-function saveIntroMessage(){
+function saveIntroMessage() {
   const introMessage = document.getElementById('intro-message');
   introMessage.addEventListener('input', (e) => {
     chrome.storage.sync.set({ introMessage: e.target.value });
