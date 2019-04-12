@@ -1,8 +1,11 @@
 const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1);
 const getGraderSignature = (graderName) => `\nThanks, ${graderName && `__${graderName}__`}`;
 const separator = `\n\n***\n`;
+
+// Needs to be global as we want to keep the original message intact even after refreshing message
 let contentInTextArea = '';
 
+// Receive a message from options.js (the extension popup) to refreeh the message
 chrome.runtime.onMessage.addListener((request) => {
   if (request.action === 'REFRESH_MESSAGE') {
     updateMessage('REFRESH');
@@ -17,11 +20,14 @@ const updateMessage = (type) => {
     const graderName = data.graderName || '';
     const devGrader = data.graderType === 'dev-grader';
     const designGrader = data.graderType === 'design-grader';
+
     const isBlocGrading = data.gradingPlatform === 'bloc-platform';
     const isThinkfulGrading = data.gradingPlatform === 'thinkful-platform';
+
     const isBlocWebsite = window.location.href.includes('bloc');
     const isThinkfulWebsite = window.location.href.includes('thinkful');
 
+    // Needs to be a function as it can be used in both Bloc and Thinkful platforms
     const blocDevGraderMessage = studentName =>
       `${getIntroText(graderName, studentName)}${contentInTextArea}${separator}If anything here that I’ve mentioned is unclear, please don’t hesitate to [reach out for help via Slack.](http://bit.ly/bloc-grading-unstuck) \n\nWant to learn more? Check out our [group sessions & QA resources page](http://bit.ly/gs-g-home) with hours of recorded video and live sessions.\n ${getGraderSignature(graderName)}`;
 
@@ -58,7 +64,8 @@ const updateMessage = (type) => {
       const submissionTextarea = document.getElementById('content');
 
       if (submissionTextarea) {
-        // Get content in the text area as Thinkful something adds the instructions in here
+
+        // Get content in the text area as Thinkful adds the grading instructions there.
         if (type === 'INITIAL') {
           contentInTextArea = submissionTextarea.value;
         }
@@ -76,6 +83,7 @@ const updateMessage = (type) => {
 
         const thinkfulDesignMessage = `${getIntroText(graderName, studentName)}${contentInTextArea}${separator}If anything here that I’ve mentioned is unclear, please don’t hesitate to reach out for technical assistance via Slack in the [#product-design channel](http://bit.ly/td-pdf-grading-help). If it’s a question about the feedback, feel free to resubmit with a question.\n\nWant to learn more? Check out our [group sessions & QA resources page](http://bit.ly/gs-g-home) with hours of recorded video and live sessions.\n ${getGraderSignature(graderName)}`;
 
+        // Populate the text area with the relevant message
         if (isThinkfulGrading) {
           if (devGrader) {
             submissionTextarea.value = thinkfulDevMessage;
