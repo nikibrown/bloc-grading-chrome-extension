@@ -12,11 +12,11 @@ window.onload = function () {
     const designGrader = data.graderType === 'design-grader';
     // Use the customized intro message if there's one, otherwise the default.
     const getIntroText = (graderName, studentName) => {
-      const customIntro = data.introMessage
+      const customIntro = data.introMessage && data.introMessage
         .replace(/\${studentName}/g, studentName)
         .replace(/\${graderName}/g, graderName);
 
-      return `${customIntro}\n\n` || `Hi ${studentName}! ${graderName && `${graderName} from the grading team here!`}\n\n`;
+      return customIntro ? `${customIntro}\n\n` : `Hi ${studentName}! ${graderName && `${graderName} from the grading team here!`}\n\n`;
     };
 
     const isBloc = window.location.href.includes('bloc');
