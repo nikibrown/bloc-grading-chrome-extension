@@ -1,16 +1,15 @@
 const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1);
 const getGraderSignature = (graderName) => `\nThanks, ${graderName && `__${graderName}__`}`;
 const separator = `\n\n***\n`;
+let contentInTextArea = '';
 
-// const port = chrome.runtime.connect();
+chrome.runtime.onMessage.addListener((request) => {
+  if (request.action === 'REFRESH_MESSAGE') {
+    updateMessage('REFRESH');
+  }
+});
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if(request.action === 'REFRESH_MESSAGE'){
-      updateMessage();
-    }
-})
-
-const updateMessage = () => {
+const updateMessage = (type) => {
 
 // Populate grader options.
 // Pass null to get all store
@@ -19,12 +18,12 @@ const updateMessage = () => {
     const devGrader = data.graderType === 'dev-grader';
     const designGrader = data.graderType === 'design-grader';
     const isBlocGrading = data.gradingPlatform === 'bloc-platform';
-    const isThinkfulGrading= data.gradingPlatform === 'thinkful-platform';
+    const isThinkfulGrading = data.gradingPlatform === 'thinkful-platform';
     const isBlocWebsite = window.location.href.includes('bloc');
     const isThinkfulWebsite = window.location.href.includes('thinkful');
 
     const blocDevGraderMessage = studentName =>
-      `${getIntroText(graderName, studentName)}${separator}If anything here that I’ve mentioned is unclear, please don’t hesitate to [reach out for help via Slack.](http://bit.ly/bloc-grading-unstuck) \n\nWant to learn more? Check out our [group sessions & QA resources page](http://bit.ly/gs-g-home) with hours of recorded video and live sessions.\n ${getGraderSignature(graderName)}`;
+      `${getIntroText(graderName, studentName)}${contentInTextArea}${separator}If anything here that I’ve mentioned is unclear, please don’t hesitate to [reach out for help via Slack.](http://bit.ly/bloc-grading-unstuck) \n\nWant to learn more? Check out our [group sessions & QA resources page](http://bit.ly/gs-g-home) with hours of recorded video and live sessions.\n ${getGraderSignature(graderName)}`;
 
     // Use the customized intro message if there's one, otherwise the default.
     const getIntroText = (graderName, studentName) => {
@@ -60,7 +59,9 @@ const updateMessage = () => {
 
       if (submissionTextarea) {
         // Get content in the text area as Thinkful something adds the instructions in here
-        const contentInTextArea = submissionTextarea.value;
+        if (type === 'INITIAL') {
+          contentInTextArea = submissionTextarea.value;
+        }
         // Ge the student's name (which doesn't have a specific class :( ).
         const fullStudentName =
           document.getElementsByClassName('submission-grader-card-top-bar')[0]
@@ -75,7 +76,7 @@ const updateMessage = () => {
 
         const thinkfulDesignMessage = `${getIntroText(graderName, studentName)}${contentInTextArea}${separator}If anything here that I’ve mentioned is unclear, please don’t hesitate to reach out for technical assistance via Slack in the [#product-design channel](http://bit.ly/td-pdf-grading-help). If it’s a question about the feedback, feel free to resubmit with a question.\n\nWant to learn more? Check out our [group sessions & QA resources page](http://bit.ly/gs-g-home) with hours of recorded video and live sessions.\n ${getGraderSignature(graderName)}`;
 
-        if(isThinkfulGrading) {
+        if (isThinkfulGrading) {
           if (devGrader) {
             submissionTextarea.value = thinkfulDevMessage;
           } else if (designGrader) {
@@ -83,7 +84,7 @@ const updateMessage = () => {
           } else {
             submissionTextarea.value = 'Please select your grader type in the extension options';
           }
-        } else if(isBlocGrading){
+        } else if (isBlocGrading) {
           submissionTextarea.value = blocDevGraderMessage(studentName);
         }
       }
@@ -105,8 +106,8 @@ const updateMessage = () => {
       setTimeout(changeURL, 200);
     });
   }
-}
+};
 
 window.onload = function () {
-  updateMessage();
+  updateMessage('INITIAL');
 };
