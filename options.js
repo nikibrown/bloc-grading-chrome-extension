@@ -1,11 +1,19 @@
-const getGraderType = (type) => `"${type && type.replace('-', ' ')}"`;
+const formatGradingText = (type) => `"${type && type.replace('-', ' ')}"`;
 
 function saveGraderData() {
-  let optionButtons = document.getElementsByClassName('grader-type');
+  const optionButtons = document.getElementsByClassName('grader-type');
   for (let button of optionButtons) {
     button.addEventListener('click', (e) => {
       chrome.storage.sync.set({ graderType: e.target.id });
-      document.getElementById('grader-type-is').innerText = `Grader type is: ${getGraderType(e.target.id)}`;
+      document.getElementById('grader-type-is').innerText = `Grader type is: ${formatGradingText(e.target.id)}`;
+    });
+  }
+
+  const platformButtons = document.getElementsByClassName('grading-platform');
+  for (let button of platformButtons) {
+    button.addEventListener('click', (e) => {
+      chrome.storage.sync.set({ gradingPlatform: e.target.id });
+      document.getElementById('platform-grading').innerText = `You're grading: ${formatGradingText(e.target.id)}`;
     });
   }
 
@@ -19,7 +27,8 @@ function populateUserData() {
   chrome.storage.sync.get(null, (data) => {
     document.getElementById('grader-name').value = data && data.graderName || '';
     document.getElementById('intro-message').value = data.introMessage || '';
-    document.getElementById('grader-type-is').innerText = `Grader type is: ${getGraderType(data.graderType)}`;
+    document.getElementById('grader-type-is').innerText = `Grader type is: ${formatGradingText(data.graderType)}`;
+    document.getElementById('platform-grading').innerText = `You're grading: ${formatGradingText(data.gradingPlatform)}`;
   });
 }
 

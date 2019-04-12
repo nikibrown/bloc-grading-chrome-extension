@@ -8,7 +8,7 @@
         }
         html {
             width: 500px;
-            padding: 20px;
+            padding: 15px;
             margin: 0 auto;
             text-align: center;
         }
@@ -47,19 +47,28 @@
 </head>
 <body>
 <h1>Choose your Bloc / Thinkful information.</h1>
-<h2>Input the name that shows on your grading snippets:</h2>
-<label for="grader-name">Name</label>
+<h3>Your name</h3>
+<label for="grader-name">Your name</label>
 <div>
     <input type="text" name="grader-name" id="grader-name" placeholder="Grader name">
 </div>
 
-<h2>Grader type, Select yours</h2>
+<h2>Grader type. Select yours</h2>
 <h3 id="grader-type-is"></h3>
 <button type="button" id="dev-grader" class="grader-type">
     Dev Grading
 </button>
 <button type="button" id="design-grader" class="grader-type">
     Design Grading
+</button>
+
+<h2>Current platform you're grading</h2>
+<h3 id="platform-grading"></h3>
+<button type="button" id="thinkful-platform" class="grading-platform">
+    Thinkful
+</button>
+<button type="button" id="bloc-platform" class="grading-platform">
+    Bloc
 </button>
 
 <h2>Customize your intro message</h2>
