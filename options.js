@@ -4,7 +4,7 @@ const refreshMessage = () => {
   });
 };
 
-const showGraderType = (gradingPlatform) => {
+const toggleGraderTypeWrapper = (gradingPlatform) => {
   if (gradingPlatform === 'thinkful-platform') {
     document.getElementById('grading-type-wrapper').style.display = 'block';
   } else {
@@ -12,7 +12,8 @@ const showGraderType = (gradingPlatform) => {
   }
 };
 
-const addActiveClass = (elementTarget) => {
+// Adds and removes the "active" class from the buttons smartly.
+const toggleActiveButtons = (elementTarget) => {
   elementTarget.classList.add('active');
 
   switch (elementTarget.id) {
@@ -37,7 +38,7 @@ function saveGraderData() {
     button.addEventListener('click', (e) => {
       chrome.storage.sync.set({ graderType: e.target.id });
       refreshMessage();
-      addActiveClass(e.target);
+      toggleActiveButtons(e.target);
     });
   }
 
@@ -46,9 +47,9 @@ function saveGraderData() {
     button.addEventListener('click', (e) => {
       chrome.storage.sync.set({ gradingPlatform: e.target.id });
 
-      showGraderType(e.target.id);
+      toggleGraderTypeWrapper(e.target.id);
       refreshMessage();
-      addActiveClass(e.target);
+      toggleActiveButtons(e.target);
     });
   }
 
@@ -63,9 +64,9 @@ function populateUserData() {
     document.getElementById('grader-name').value = data && data.graderName || '';
     document.getElementById('intro-message').value = data.introMessage || '';
 
-    addActiveClass(document.getElementById(data.graderType));
-    addActiveClass(document.getElementById(data.gradingPlatform));
-    showGraderType(data.gradingPlatform);
+    toggleActiveButtons(document.getElementById(data.graderType));
+    toggleActiveButtons(document.getElementById(data.gradingPlatform));
+    toggleGraderTypeWrapper(data.gradingPlatform);
   });
 }
 
