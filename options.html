@@ -3,9 +3,10 @@
 <head>
     <title>Thinkful / Bloc extension options</title>
     <style>
-        *{
+        * {
             box-sizing: border-box;
         }
+
         html {
             width: 500px;
             padding: 15px;
@@ -39,8 +40,13 @@
             display: none;
         }
 
-        .full-width{
+        .full-width {
             width: 100%;
+        }
+
+        .active {
+            color: #fff;
+            background-color: #3f51b5;
         }
 
     </style>
@@ -53,23 +59,25 @@
     <input type="text" name="grader-name" id="grader-name" placeholder="Grader name">
 </div>
 
-<h2>Grader type. Select yours</h2>
-<h3 id="grader-type-is"></h3>
-<button type="button" id="dev-grader" class="grader-type">
-    Dev Grading
-</button>
-<button type="button" id="design-grader" class="grader-type">
-    Design Grading
-</button>
+<div id="grading-platform-wrapper">
+    <h2>Current platform you're grading</h2>
+    <button type="button" id="thinkful-platform" class="grading-platform">
+        Thinkful
+    </button>
+    <button type="button" id="bloc-platform" class="grading-platform">
+        Bloc
+    </button>
+</div>
 
-<h2>Current platform you're grading</h2>
-<h3 id="platform-grading"></h3>
-<button type="button" id="thinkful-platform" class="grading-platform">
-    Thinkful
-</button>
-<button type="button" id="bloc-platform" class="grading-platform">
-    Bloc
-</button>
+<div id="grading-type-wrapper">
+    <h2>Grader type. Select yours</h2>
+    <button type="button" id="dev-grader" class="grader-type">
+        Dev Grading
+    </button>
+    <button type="button" id="design-grader" class="grader-type">
+        Design Grading
+    </button>
+</div>
 
 <h2>Customize your intro message</h2>
 <label for="intro-message">Name</label>

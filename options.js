@@ -1,8 +1,34 @@
-const formatGradingText = (type) => `"${type && type.replace('-', ' ')}"`;
 const refreshMessage = () => {
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, {action: 'REFRESH_MESSAGE'});
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, { action: 'REFRESH_MESSAGE' });
   });
+};
+
+const showGraderType = (gradingPlatform) => {
+  if (gradingPlatform === 'thinkful-platform') {
+    document.getElementById('grading-type-wrapper').style.display = 'block';
+  } else {
+    document.getElementById('grading-type-wrapper').style.display = 'none';
+  }
+};
+
+const addActiveClass = (elementTarget) => {
+  elementTarget.classList.add('active');
+
+  switch (elementTarget.id) {
+    case 'thinkful-platform':
+      document.getElementById('bloc-platform').classList.remove('active');
+      break;
+    case 'bloc-platform':
+      document.getElementById('thinkful-platform').classList.remove('active');
+      break;
+    case 'dev-grader':
+      document.getElementById('design-grader').classList.remove('active');
+      break;
+    case 'design-grader':
+      document.getElementById('dev-grader').classList.remove('active');
+      break;
+  }
 };
 
 function saveGraderData() {
@@ -10,9 +36,8 @@ function saveGraderData() {
   for (let button of optionButtons) {
     button.addEventListener('click', (e) => {
       chrome.storage.sync.set({ graderType: e.target.id });
-      document.getElementById('grader-type-is').innerText = `Grader type is: ${formatGradingText(e.target.id)}`;
-
       refreshMessage();
+      addActiveClass(e.target);
     });
   }
 
@@ -20,9 +45,10 @@ function saveGraderData() {
   for (let button of platformButtons) {
     button.addEventListener('click', (e) => {
       chrome.storage.sync.set({ gradingPlatform: e.target.id });
-      document.getElementById('platform-grading').innerText = `You're grading: ${formatGradingText(e.target.id)}`;
 
+      showGraderType(e.target.id);
       refreshMessage();
+      addActiveClass(e.target);
     });
   }
 
@@ -36,8 +62,10 @@ function populateUserData() {
   chrome.storage.sync.get(null, (data) => {
     document.getElementById('grader-name').value = data && data.graderName || '';
     document.getElementById('intro-message').value = data.introMessage || '';
-    document.getElementById('grader-type-is').innerText = `Grader type is: ${formatGradingText(data.graderType)}`;
-    document.getElementById('platform-grading').innerText = `You're grading: ${formatGradingText(data.gradingPlatform)}`;
+
+    addActiveClass(document.getElementById(data.graderType));
+    addActiveClass(document.getElementById(data.gradingPlatform));
+    showGraderType(data.gradingPlatform);
   });
 }
 
