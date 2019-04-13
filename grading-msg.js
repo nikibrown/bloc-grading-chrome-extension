@@ -34,8 +34,7 @@ const updateMessage = (type) => {
     // Use the customized intro message if there's one, otherwise the default.
     const getIntroText = (graderName, studentName) => {
       const customIntro = data.introMessage && data.introMessage
-        .replace(/\${studentName}/g, studentName)
-        .replace(/\${graderName}/g, graderName);
+        .replace(/\${studentName}/g, studentName);
 
       return customIntro ? `${customIntro}\n\n` : `Hi ${studentName}! ${graderName && `${graderName} from the grading team here!`}\n\n`;
     };
