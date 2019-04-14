@@ -1,5 +1,5 @@
 const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1);
-const getGraderSignature = (graderName) => `\nThanks, ${graderName && `__${graderName}__`}`;
+const getGraderSignature = (graderName) => `\nThanks,\n ${graderName && `__${graderName}__`}`;
 const separator = `\n\n***\n`;
 
 // Needs to be global as we want to keep the original message intact even after refreshing message
