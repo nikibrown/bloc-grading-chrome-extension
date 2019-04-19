@@ -18,14 +18,16 @@ Chrome extension for Bloc graders to auto fill with default grading message and 
 - ![developer mode](http://nikib.ro/wn/screenshots/Extensions_2018-04-09_08-05-18.jpg)
 - Click on `load unpacked` and browse to the extension files that you cloned or downloaded
 - Thats it!
+- To refresh the page (when you pull from the repo or make changes) you can click on the refresh 
+icon.
 
 ### Usage
 
-- Open the options by clicking on the chrome extension icon (To have it on an page, right-click  
-on it and then on "Options").
-- Enter your name and the type of grading you do.
-![extension options](https://t.gyazo.com/teams/leovegas/0dbf3354d7e28328794ea6508ed8c2f3.png)
-- Go to any submission that you have clamied from the grading queue and the snippet will be added on page load. It will 
-automatically change for bloc/thinkful depending on your type.
-- If you grade both Dev and Design, you can easily switch from one to the other by selecting the grader type from the extension options menu and the snippet will automatically adapt.
-- You can also customize the intro message from the default to your own if you wish.
+- Open the options by clicking on the chrome extension icon.
+- Enter your name and the program you're grading.
+![extension options](https://t.gyazo.com/teams/leovegas/7753d89a481ac07be48a342f8d060219.png)
+- Go to any submission that you've claimed from the grading queue and the snippet will be added
+ on page load. It will automatically adapt to the program you selected.
+- Changing the program while grading will automatically re-populate the text field, this is 
+useful to avoid refreshing the page, but be careful as it will override anything you wrote before.
+- You can also customize the intro message from the default to your own.

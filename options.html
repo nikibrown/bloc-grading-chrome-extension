@@ -3,12 +3,13 @@
 <head>
     <title>Thinkful / Bloc extension options</title>
     <style>
-        *{
+        * {
             box-sizing: border-box;
         }
+
         html {
             width: 500px;
-            padding: 20px;
+            padding: 15px;
             margin: 0 auto;
             text-align: center;
         }
@@ -23,7 +24,7 @@
             box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .12);
             background-color: #e0e0e0;
             padding: 6px 16px;
-            margin-right: 10px;
+            margin: 6px;
             border-radius: 4px;
             font-size: 16px;
         }
@@ -39,36 +40,60 @@
             display: none;
         }
 
-        .full-width{
+        .full-width {
             width: 100%;
+        }
+
+        .active {
+            color: #fff;
+            background-color: #3f51b5;
         }
 
     </style>
 </head>
 <body>
-<h1>Choose your Bloc / Thinkful information.</h1>
-<h2>Input the name that shows on your grading snippets:</h2>
-<label for="grader-name">Name</label>
+<h1>Choose your Grading information.</h1>
+<h3>Your name</h3>
+<label for="grader-name">Your name</label>
 <div>
     <input type="text" name="grader-name" id="grader-name" placeholder="Grader name">
 </div>
 
-<h2>Grader type, Select yours</h2>
-<h3 id="grader-type-is"></h3>
-<button type="button" id="dev-grader" class="grader-type">
-    Dev Grading
-</button>
-<button type="button" id="design-grader" class="grader-type">
-    Design Grading
-</button>
+<h2>Current program you're grading</h2>
+<div id="grading-program-wrapper">
+    <button type="button" id="web-development-track" class="grading-program">
+        Web Development Track
+    </button>
+    <button type="button" id="full-stack-flex" class="grading-program">
+        Full Stack Flex
+    </button>
+    <button type="button" id="design-track" class="grading-program">
+        Design Track
+    </button>
+    <button type="button" id="product-design-flex" class="grading-program">
+        Product Design Flex
+    </button>
+    <button type="button" id="data-analytics" class="grading-program">
+        Data Analytics
+    </button>
+    <button type="button" id="data-science" class="grading-program">
+        Data Science
+    </button>
+    <button type="button" id="software-development-track" class="grading-program">
+        Software Development Track
+    </button>
+    <button type="button" id="ei-nw" class="grading-program">
+        Engineering Immersion / Nights & Weekends
+    </button>
+</div>
 
 <h2>Customize your intro message</h2>
 <label for="intro-message">Name</label>
-<p>To use student name type ${studentName}, to use your own name type ${graderName}</p>
-<p><strong>Default is:</strong> Hello ${studentName}! ${graderName} from the grading team here!</p>
+<p>To use student name type ${studentName}</p>
+<p><strong>Default is:</strong> Hello ${studentName}! Your Name from the grading team here.</p>
 <div>
     <input type="text" name="intro-message" id="intro-message" class="full-width"
-           placeholder="Ahoyyy ${studentName}! ${graderName} her'">
+           placeholder="Ahoyyy ${studentName}! Jon Smith here.">
 </div>
 </body>
 <script src="options.js"></script>
