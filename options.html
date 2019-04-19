@@ -24,7 +24,7 @@
             box-shadow: 0 1px 5px 0 rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .12);
             background-color: #e0e0e0;
             padding: 6px 16px;
-            margin-right: 10px;
+            margin: 6px;
             border-radius: 4px;
             font-size: 16px;
         }
@@ -67,25 +67,39 @@
     <button type="button" id="bloc-platform" class="grading-platform">
         Bloc
     </button>
-</div>
-
-<div id="grading-type-wrapper">
-    <h2>Grader type. Select yours</h2>
-    <button type="button" id="dev-grader" class="grader-type">
-        Dev Grading
+    <button type="button" id="design-track" class="grading-platform">
+        Design Track
     </button>
-    <button type="button" id="design-grader" class="grader-type">
-        Design Grading
+    <button type="button" id="product-design-flex" class="grading-platform">
+        Product Design Flex
+    </button>
+    <button type="button" id="web-development-track" class="grading-platform">
+        Web Development Track
+    </button>
+    <button type="button" id="software-development-track" class="grading-platform">
+        Software Development Track
+    </button>
+    <button type="button" id="full-stack-flex" class="grading-platform">
+        Full stack flex
+    </button>
+    <button type="button" id="ei-nw" class="grading-platform">
+        Engineering Immersion / Nights & Weekends
+    </button>
+    <button type="button" id="data-analytics" class="grading-platform">
+        Data Analytics
+    </button>
+    <button type="button" id="data-science" class="grading-platform">
+        Data Science
     </button>
 </div>
 
 <h2>Customize your intro message</h2>
 <label for="intro-message">Name</label>
 <p>To use student name type ${studentName}</p>
-<p><strong>Default is:</strong> Hello ${studentName}! ${graderName} from the grading team here!</p>
+<p><strong>Default is:</strong> Hello ${studentName}! Jon Smith from the grading team here!</p>
 <div>
     <input type="text" name="intro-message" id="intro-message" class="full-width"
-           placeholder="Ahoyyy ${studentName}! Obed here.">
+           placeholder="Ahoyyy ${studentName}! Jon Smith here.">
 </div>
 </body>
 <script src="options.js"></script>

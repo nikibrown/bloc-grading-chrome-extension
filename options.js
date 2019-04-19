@@ -4,32 +4,16 @@ const refreshMessage = () => {
   });
 };
 
-const toggleGraderTypeWrapper = (gradingPlatform) => {
-  if (gradingPlatform === 'thinkful-platform') {
-    document.getElementById('grading-type-wrapper').style.display = 'block';
-  } else {
-    document.getElementById('grading-type-wrapper').style.display = 'none';
-  }
-};
-
 // Adds and removes the "active" class from the buttons smartly.
 const toggleActiveButtons = (elementTarget) => {
-  elementTarget.classList.add('active');
+  const selectedProgram = document.getElementsByClassName('active');
 
-  switch (elementTarget.id) {
-    case 'thinkful-platform':
-      document.getElementById('bloc-platform').classList.remove('active');
-      break;
-    case 'bloc-platform':
-      document.getElementById('thinkful-platform').classList.remove('active');
-      break;
-    case 'dev-grader':
-      document.getElementById('design-grader').classList.remove('active');
-      break;
-    case 'design-grader':
-      document.getElementById('dev-grader').classList.remove('active');
-      break;
+  // for loop, safer than deselecting only one.
+  for (let program of selectedProgram) {
+    program.classList.remove('active');
   }
+
+  elementTarget.classList.add('active');
 };
 
 function saveGraderData() {
@@ -47,7 +31,6 @@ function saveGraderData() {
     button.addEventListener('click', (e) => {
       chrome.storage.sync.set({ gradingPlatform: e.target.id });
 
-      toggleGraderTypeWrapper(e.target.id);
       refreshMessage();
       toggleActiveButtons(e.target);
     });
@@ -64,9 +47,7 @@ function populateUserData() {
     document.getElementById('grader-name').value = data && data.graderName || '';
     document.getElementById('intro-message').value = data.introMessage || '';
 
-    toggleActiveButtons(document.getElementById(data.graderType));
     toggleActiveButtons(document.getElementById(data.gradingPlatform));
-    toggleGraderTypeWrapper(data.gradingPlatform);
   });
 }
 

@@ -18,8 +18,6 @@ const updateMessage = (type) => {
 // Pass null to get all store
   chrome.storage.sync.get(null, (data) => {
     const graderName = data.graderName || '';
-    const devGrader = data.graderType === 'dev-grader';
-    const designGrader = data.graderType === 'design-grader';
 
     const isBlocGrading = data.gradingPlatform === 'bloc-platform';
     const isThinkfulGrading = data.gradingPlatform === 'thinkful-platform';
