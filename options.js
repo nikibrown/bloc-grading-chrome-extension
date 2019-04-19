@@ -26,10 +26,10 @@ function saveGraderData() {
     });
   }
 
-  const platformButtons = document.getElementsByClassName('grading-platform');
+  const platformButtons = document.getElementsByClassName('grading-program');
   for (let button of platformButtons) {
     button.addEventListener('click', (e) => {
-      chrome.storage.sync.set({ gradingPlatform: e.target.id });
+      chrome.storage.sync.set({ gradingProgram: e.target.id });
 
       refreshMessage();
       toggleActiveButtons(e.target);
@@ -47,7 +47,9 @@ function populateUserData() {
     document.getElementById('grader-name').value = data && data.graderName || '';
     document.getElementById('intro-message').value = data.introMessage || '';
 
-    toggleActiveButtons(document.getElementById(data.gradingPlatform));
+    if (data.gradingProgram) {
+      toggleActiveButtons(document.getElementById(data.gradingProgram));
+    }
   });
 }
 

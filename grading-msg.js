@@ -1,5 +1,4 @@
 const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1);
-const getGraderSignature = (graderName) => `\nThanks,\n ${graderName && `__${graderName}__`}`;
 const separator = `\n\n***\n`;
 
 // Needs to be global as we want to keep the original message intact even after refreshing message
@@ -18,23 +17,64 @@ const updateMessage = (type) => {
 // Pass null to get all store
   chrome.storage.sync.get(null, (data) => {
     const graderName = data.graderName || '';
+    const gradingProgram = data.gradingProgram;
 
-    const isBlocGrading = data.gradingPlatform === 'bloc-platform';
-    const isThinkfulGrading = data.gradingPlatform === 'thinkful-platform';
+    const feedbackQuestionText = 'If it’s a question about the feedback, feel free to resubmit' +
+      ' with a question and the grading team will get back to you as quickly as possible.';
+    const wantToLearnMoreText = '\n\nWant to learn more? Check out our group sessions & QA' +
+      ' resources page http://bit.ly/gs-g-home with hours of recorded video and live sessions.';
 
     const isBlocWebsite = window.location.href.includes('bloc');
     const isThinkfulWebsite = window.location.href.includes('thinkful');
 
-    // Needs to be a function as it can be used in both Bloc and Thinkful platforms
-    const blocDevGraderMessage = studentName =>
-      `${getIntroText(graderName, studentName)}${contentInTextArea}${separator}If anything here that I’ve mentioned is unclear, please don’t hesitate to [reach out for help via Slack.](http://bit.ly/bloc-grading-unstuck) \n\nWant to learn more? Check out our [group sessions & QA resources page](http://bit.ly/gs-g-home) with hours of recorded video and live sessions.\n ${getGraderSignature(graderName)}`;
+    const getGraderSignature = () => `\n\nThanks,\n ${graderName && `__${graderName}__`}`;
 
+    const createMessage = (message, studentName) =>
+      `${getIntroText(graderName, studentName)}${contentInTextArea}${separator}${message} ${getGraderSignature()}`;
+
+    const getProgramMessage = studentName => {
+      let message = '';
+      switch (gradingProgram) {
+        case 'design-track':
+          message = `If anything here that I’ve mentioned is unclear, please don’t hesitate to reach out for technical assistance via Slack: https://www.bloc.io/resources/getting-unstuck. ${feedbackQuestionText} ${wantToLearnMoreText}`
+          break;
+        case 'product-design-flex':
+          message = `If anything here that I’ve mentioned is unclear, please don’t hesitate to reach out for technical assistance via Slack in the #product-design channel: https://thinkful.slack.com/messages/product-design/. ${feedbackQuestionText}`
+          break;
+        case 'web-development-track':
+          message = `If anything here that I’ve mentioned is unclear, please don’t hesitate to reach out for technical assistance via Slack: https://www.bloc.io/resources/getting-unstuck. ${feedbackQuestionText} ${wantToLearnMoreText}`
+          break;
+        case 'software-development-track':
+          message = `If anything here that I’ve mentioned is unclear, please don’t hesitate to reach out for technical assistance via Slack: https://www.bloc.io/resources/getting-unstuck. ${feedbackQuestionText} ${wantToLearnMoreText}`
+          break;
+        case 'full-stack-flex':
+          message = `If anything here that I’ve mentioned is unclear, please don’t hesitate to reach out for technical assistance via Slack in the #fullstack-flex channel: https://thinkful.slack.com/messages/fullstack-flex. You can also join our scheduled Front End office hours: https://www.thinkful.com/open-sessions/qa-sessions/frontend/. \n${feedbackQuestionText}`
+          break;
+        case 'ei-nw':
+          message = `If anything here that I’ve mentioned is unclear, please don’t hesitate to join an Q&A session for technical assistance via Slack: https://www.thinkful.com/open-sessions/qa-sessions/. \n${feedbackQuestionText}`
+          break;
+        case 'data-analytics':
+          message = `If anything here that I’ve mentioned is unclear, please don’t hesitate to reach out for technical assistance via Slack in the #data-analytics channel: https://thinkful.slack.com/messages/data-analytics You can also join our scheduled Data Analytics office hours: https://www.thinkful.com/open-sessions/qa-sessions/data%20analytics/. \n${feedbackQuestionText}`
+          break;
+        case 'data-science':
+          message = `If anything here that I’ve mentioned is unclear, please don’t hesitate to reach out for technical assistance via Slack in the #data-science channel: https://thinkful.slack.com/messages/data-science You can also join our scheduled Data Analytics office hours: https://www.thinkful.com/open-sessions/qa-sessions/data%20science/. \n${feedbackQuestionText}`
+          break;
+      }
+
+      return (
+        message
+        ? createMessage(message, studentName)
+        : 'Please select which program you\'re grading in the extension options'
+      );
+
+    };
     // Use the customized intro message if there's one, otherwise the default.
     const getIntroText = (graderName, studentName) => {
       const customIntro = data.introMessage && data.introMessage
-        .replace(/\${studentName}/g, studentName);
+        .replace(/\${studentName}/g, studentName)
+        .replace(/\${graderName}/g, graderName);
 
-      return customIntro ? `${customIntro}\n\n` : `Hi ${studentName}! ${graderName && `${graderName} from the grading team here!`}\n\n`;
+      return customIntro ? `${customIntro}\n\n` : `Hi ${studentName}! ${graderName && `${graderName} from the grading team here.`}\n\n`;
     };
 
     if (isBlocWebsite) {
@@ -42,19 +82,16 @@ const updateMessage = (type) => {
       const studentNameContainer = document.getElementsByClassName('mentor-review-header');
 
       // get the text
-      const studentNameSentence = studentNameContainer[0].innerText;
-      // split the text
-      const splitString = studentNameSentence.split(' ');
-
+      const studentNameSentence = studentNameContainer[0].innerText.split(' ');
       // grab the name!
-      const studentName = capitalizeFirstLetter(splitString[2]);
+      const studentName = capitalizeFirstLetter(studentNameSentence[2]);
 
       // get textzarea
       const submissionTextarea = document.getElementById('comment-box');
 
       if (submissionTextarea) {
         // set value of text area with student name
-        submissionTextarea.value = blocDevGraderMessage(studentName);
+        submissionTextarea.value = getProgramMessage(studentName);
       }
     } else if (isThinkfulWebsite) {
       // get textzarea
@@ -75,23 +112,8 @@ const updateMessage = (type) => {
         // Take only the first name
         const studentName = capitalizeFirstLetter(fullStudentName.split(' ')[0]);
 
-        // Dev and Designer messages for thinkful, each its different
-        const thinkfulDevMessage = `${getIntroText(graderName, studentName)}${contentInTextArea}${separator}If anything here that I’ve mentioned is unclear, please don’t hesitate to join an Q&A session for technical assistance via [Slack](http://bit.ly/tf-dev-grading-help). If it’s a question about the feedback, feel free to resubmit with a question and the grading team will get back to you as quickly as possible. \n\nWant to learn more? Check out our [group sessions & QA resources page](http://bit.ly/gs-g-home) with hours of recorded video and live sessions.\n ${getGraderSignature(graderName)}`;
-
-        const thinkfulDesignMessage = `${getIntroText(graderName, studentName)}${contentInTextArea}${separator}If anything here that I’ve mentioned is unclear, please don’t hesitate to reach out for technical assistance via Slack in the [#product-design channel](http://bit.ly/td-pdf-grading-help). If it’s a question about the feedback, feel free to resubmit with a question.\n\nWant to learn more? Check out our [group sessions & QA resources page](http://bit.ly/gs-g-home) with hours of recorded video and live sessions.\n ${getGraderSignature(graderName)}`;
-
         // Populate the text area with the relevant message
-        if (isThinkfulGrading) {
-          if (devGrader) {
-            submissionTextarea.value = thinkfulDevMessage;
-          } else if (designGrader) {
-            submissionTextarea.value = thinkfulDesignMessage;
-          } else {
-            submissionTextarea.value = 'Please select your grader type in the extension options';
-          }
-        } else if (isBlocGrading) {
-          submissionTextarea.value = blocDevGraderMessage(studentName);
-        }
+        submissionTextarea.value = getProgramMessage(studentName);
       }
     }
   });
