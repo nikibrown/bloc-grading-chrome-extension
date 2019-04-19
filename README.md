@@ -1,14 +1,10 @@
 ## Bloc / Thinkful Grading Chrome Extension
 
-Chrome extension for Bloc graders to auto fill with default grading message and students name.
+Chrome extension for graders to auto fill with a grading signature and greeting
 
 ### Video walk through
 
-[http://nikib.ro/wn/screenshots/grading-chrome-ext-howto.mp4](http://nikib.ro/wn/screenshots/grading-chrome-ext-howto.mp4)
-
-- Bloc: Only works when `#submission` is at the end of URL (or textarea is visible on the page): 
-[https://www.bloc.io/users/nick-noel/checkpoints/2017#submission](https://www.bloc.io/users/nick-noel/checkpoints/2017#submission) (ie you are clicking on a link from the grading spreadsheet)
-- Thinkful: Only works when the url it's from `lark.thinkful.com/grading/`
+[http://nikib.ro/wn/screenshots/grading-chrome-extension-update.mp4](http://nikib.ro/wn/screenshots/grading-chrome-extension-update.mp4)
 
 ### Installation instructions
 
