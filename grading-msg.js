@@ -1,5 +1,16 @@
 const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1);
-const separator = `\n\n***\n`;
+const standardFeedbackText = `
+## 👍 What you did well
+
+
+## ❌ Required changes to pass the assignment
+
+
+## 💡 Optional changes / Ideas / Improvements
+
+
+## 🛠️ Resources for further learning
+`;
 
 // Needs to be global as we want to keep the original message intact even after refreshing message
 let contentInTextArea = '';
@@ -27,10 +38,17 @@ const updateMessage = (type) => {
     const isBlocWebsite = window.location.href.includes('bloc');
     const isThinkfulWebsite = window.location.href.includes('thinkful');
 
-    const getGraderSignature = () => `\n\nThanks,\n ${graderName && `__${graderName}__`}`;
+    const graderSignature = `\n\nThanks,\n ${graderName && `__${graderName}__`}`;
 
+    // Tabs here matters as its translated into HTML space.
     const createMessage = (message, studentName) =>
-      `${getIntroText(graderName, studentName)}${contentInTextArea}${separator}${message} ${getGraderSignature()}`;
+`${getIntroText(graderName, studentName)}
+${standardFeedbackText}
+\n\n
+${contentInTextArea}
+\n\n***\n
+${message}
+${graderSignature}`;
 
     const getProgramMessage = studentName => {
       let message = '';
@@ -68,28 +86,26 @@ const updateMessage = (type) => {
       );
 
     };
+
     // Use the customized intro message if there's one, otherwise the default.
     const getIntroText = (graderName, studentName) => {
       const customIntro = data.introMessage && data.introMessage
         .replace(/\${studentName}/g, studentName)
         .replace(/\${graderName}/g, graderName);
 
-      return customIntro ? `${customIntro}\n\n` : `Hi ${studentName}! ${graderName && `${graderName} from the grading team here.`}\n\n`;
+      return customIntro ? `${customIntro}\n\n` : `Hi ${studentName}! ${graderName && `${graderName} from the grading team here.`}`;
     };
 
     if (isBlocWebsite) {
-      // grab the HTML element that has the students name in it
-      const studentNameContainer = document.getElementsByClassName('mentor-review-header');
-
-      // get the text
-      const studentNameSentence = studentNameContainer[0].innerText.split(' ');
-      // grab the name!
-      const studentName = capitalizeFirstLetter(studentNameSentence[2]);
-
       // get textzarea
       const submissionTextarea = document.getElementById('comment-box');
 
       if (submissionTextarea) {
+        // Find the clean up the student's first name
+        const studentNameContainer = document.getElementsByClassName('mentor-review-header');
+        const studentNameSentence = studentNameContainer[0].innerText.split(' ');
+        const studentName = capitalizeFirstLetter(studentNameSentence[2]);
+
         // set value of text area with student name
         submissionTextarea.value = getProgramMessage(studentName);
       }
