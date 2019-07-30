@@ -8,7 +8,7 @@ Chrome extension for graders to auto fill with a grading signature and greeting
 
 ### Installation instructions
 
-- Download or clone this repo
+- Download or clone this repo (If you download the zip you will need to unzip the file)
 - In Chrome go to [chrome://extensions/](chrome://extensions/)
 - Turn on developer mode
 - ![developer mode](http://nikib.ro/wn/screenshots/Extensions_2018-04-09_08-05-18.jpg)
