@@ -66,7 +66,7 @@ ${graderSignature}`;
           message = `If anything here that I’ve mentioned is unclear, please don’t hesitate to reach out for technical assistance via Slack: https://www.bloc.io/resources/getting-unstuck. ${feedbackQuestionText} ${wantToLearnMoreText}`
           break;
         case 'engineering-flex':
-          message = `If anything here that I’ve mentioned is unclear, please don’t hesitate to reach out for technical assistance. You can also join our scheduled Front End office hours: https://www.thinkful.com/open-sessions/qa-sessions/frontend/ If it’s a question about the feedback, feel free to resubmit with a question.\n${feedbackQuestionText}`
+          message = `If anything here that I’ve mentioned is unclear, please don’t hesitate to reach out for technical assistance. You can also join our scheduled Front End office hours: https://www.thinkful.com/open-sessions/qa-sessions/frontend/ \n${feedbackQuestionText}`
           break;
         case 'ei-nw':
           message = `If anything here that I’ve mentioned is unclear, please don’t hesitate to join an Q&A session for technical assistance via Slack: https://www.thinkful.com/open-sessions/qa-sessions/. \n${feedbackQuestionText}`
