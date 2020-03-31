@@ -4,15 +4,20 @@
   "description": "Firefox extension for Bloc and Thinkful graders to auto fill with default grading message and students name.",
   "version": "2.1.0",
   "content_scripts": [
-      {
-        "matches": [
-          "*://www.bloc.io/users*",
-          "https://rawgit.com/",  
-          "*://lark.thinkful.com/grading*"
-        ],
-        "js": ["grading-msg.js"]
-      }
-    ],
+    {
+      "matches": [
+        "*://www.bloc.io/users*",
+        "https://rawgit.com/",  
+        "*://lark.thinkful.com/grading*"
+      ],
+      "js": ["grading-msg.js"]
+    }
+  ],
+  "applications": {
+    "gecko": {
+      "id": "2borderify@example.com"
+    }
+  },
   "permissions": ["storage", "tabs"],
   "options_ui": {
     "page": "options.html",

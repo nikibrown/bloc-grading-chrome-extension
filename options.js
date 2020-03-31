@@ -20,7 +20,7 @@ function saveGraderData() {
   const optionButtons = document.getElementsByClassName('grader-type');
   for (let button of optionButtons) {
     button.addEventListener('click', (e) => {
-      storage.sync.set({ graderType: e.target.id });
+      browser.storage.sync.set({ graderType: e.target.id });
       refreshMessage();
       toggleActiveButtons(e.target);
     });
@@ -29,7 +29,7 @@ function saveGraderData() {
   const platformButtons = document.getElementsByClassName('grading-program');
   for (let button of platformButtons) {
     button.addEventListener('click', (e) => {
-      storage.sync.set({ gradingProgram: e.target.id });
+      browser.storage.sync.set({ gradingProgram: e.target.id });
 
       refreshMessage();
       toggleActiveButtons(e.target);
@@ -38,12 +38,12 @@ function saveGraderData() {
 
   const graderName = document.getElementById('grader-name');
   graderName.addEventListener('input', (e) => {
-    storage.sync.set({ graderName: e.target.value });
+    browser.storage.sync.set({ graderName: e.target.value });
   });
 }
 
 function populateUserData() {
-  storage.sync.get(null).then((data) => {
+  browser.storage.sync.get(null).then((data) => {
     document.getElementById('grader-name').value = data && data.graderName || '';
     document.getElementById('intro-message').value = data.introMessage || '';
 
@@ -56,10 +56,15 @@ function populateUserData() {
 function saveIntroMessage() {
   const introMessage = document.getElementById('intro-message');
   introMessage.addEventListener('input', (e) => {
-    storage.sync.set({ introMessage: e.target.value });
+    browser.storage.sync.set({ introMessage: e.target.value });
   });
 }
 
-saveIntroMessage();
-populateUserData();
-saveGraderData();
+try{
+  saveIntroMessage();
+  populateUserData();
+  saveGraderData();
+}
+catch(e){
+  console.log(e.message);
+}
